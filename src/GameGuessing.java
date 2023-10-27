@@ -19,7 +19,8 @@ public abstract class GameGuessing extends Game{
     public String getId(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type your id:");
-        String id = scanner.next();
+      String id = scanner.next();
+
         return id;
     }
 
@@ -27,15 +28,15 @@ public abstract class GameGuessing extends Game{
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to play it? Yes/No");
         String answer = scanner.next();
-//            while (answer.equals("Yes") && answer.equals("No")) {
-//                System.out.println("Do you want to play more? Yes/No");
-//                answer = scanner.next();
-//            }
+////            while (answer.equals("Yes") && answer.equals("No")) {
+////                System.out.println("Do you want to play more? Yes/No");
+////                answer = scanner.next();
+////            }
         if (answer.equals("Yes")) {
             return true;
         }
-        else {
-            return false;}
+        System.out.println("Game stops.");
+        return false;
     };
 
     public char getGuess(String validPool) {
@@ -43,7 +44,8 @@ public abstract class GameGuessing extends Game{
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter a Character:");
         guess = scanner.next().charAt(0);
-        while (validPool.indexOf(guess)==-1) {
+        while (validPool.indexOf(Character.toLowerCase(guess))==-1) {
+            System.out.println("Guessing validly:"+ validPool);
             System.out.println("enter a Character:");
             guess = scanner.next().charAt(0);
         }

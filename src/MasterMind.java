@@ -5,9 +5,10 @@ public class MasterMind extends GameGuessing{
     private StringBuilder colors = new StringBuilder("RGBYOP");
     private int CODESIZE ;
     private int score = 100;
-    private String validPool = "RGBYOP";
+    private String validPool = "rgbyop";
     public MasterMind(int size){
         CODESIZE = size;
+        phrase = new StringBuilder();
     }
 
     public void randomPhrase(){
@@ -17,14 +18,17 @@ public class MasterMind extends GameGuessing{
             int r = rand.nextInt(6); // gets 0, 1, or 2
             char ch = colors.charAt(r);
             phrase.append(ch);
+            i ++;
         }
     }
 
     public int checkExact(StringBuilder secretSB, StringBuilder guessSB){
         int exact = 0;
         for (int j= 0; j < CODESIZE; j++){
-            if (secretSB.charAt(j) == guessSB.charAt(j)){
-                exact ++;
+            char c1 = Character.toLowerCase(secretSB.charAt(j));
+            char c2 =  Character.toLowerCase(guessSB.charAt(j));
+            if (c1 == c2){
+                exact = exact+1;
                 secretSB.setCharAt(j,'-');
             }
         }
@@ -39,7 +43,7 @@ public class MasterMind extends GameGuessing{
         while (i<CODESIZE) {
             int j=0;
             while (j<CODESIZE) {
-                if (secretSB.charAt(i) == guessSB.charAt(j)) {
+                if (Character.toLowerCase(secretSB.charAt(i)) == Character.toLowerCase(guessSB.charAt(j))) {
                     partials = partials + 1;
                     secretSB.setCharAt(i,'-');
                     guessSB.setCharAt(j,'*');
@@ -69,7 +73,8 @@ public class MasterMind extends GameGuessing{
         int exact = 0;
         while (exact != CODESIZE){
             String answer = allGuess();
-            StringBuilder secretSB = new StringBuilder(secret);
+            System.out.println("Your guess: "+answer);
+            StringBuilder secretSB = new StringBuilder(phrase);
             StringBuilder guessSB = new StringBuilder(answer);
             exact = checkExact(secretSB,guessSB);
             int partial = checkPartials(secretSB,guessSB);
@@ -79,5 +84,10 @@ public class MasterMind extends GameGuessing{
         System.out.println("Congradulation! You are win!");
         GameRecord newrecord = new GameRecord(score,id);
         return newrecord;
+    }
+    public static void main(String[] args) {
+        MasterMind m = new MasterMind(4);
+        AllGameRecord record = m.playAll();
+        System.out.println(record);
     }
 }

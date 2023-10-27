@@ -62,7 +62,7 @@ public class WheelOfFurtune extends GameGuessing{
         randomPhrase();
         getSecretphrase();
         System.out.println(secret);
-        while (!secret.toString().equals(phrase)){
+        while (secret.indexOf("*") != -1){
             char guess = nextGuess();
             if (processGuess(guess)){
                 System.out.println(secret);
@@ -82,5 +82,13 @@ public class WheelOfFurtune extends GameGuessing{
         if (!phList.isEmpty()){
             return super.playNext();}
         return false;
+    }
+
+    public static void main(String[] args) {
+        WheelOfFurtune UserGame = new WheelOfFurtune("phrases.txt");
+        AllGameRecord record = UserGame.playAll();
+        System.out.println(record);
+        System.out.println(record.highGameList(2));
+        System.out.println(record.average());
     }
 }
